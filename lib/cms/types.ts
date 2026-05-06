@@ -13,35 +13,24 @@ export type HeroBlock = {
   subheadline?: string;
   cta?: { label: string; href: string };
   backgroundImage?: { src: string; alt?: string };
-  /** optional gallery to show as the hero background */
-  gallery?: GalleryItem[];
 };
-
-export type GalleryImageItem = {
-  _type?: "image";
-  src: string;
-  alt?: string;
-  /** optional thumbnail or poster for videos */
-  poster?: string;
-};
-
-export type GalleryVideoItem = {
-  _type: "video";
-  /** direct video file url (mp4/webm) */
-  videoUrl?: string;
-  /** embed url for iframe embeds (YouTube/Vimeo) */
-  embedUrl?: string;
-  /** optional poster image */
-  poster?: string;
-  alt?: string;
-};
-
-export type GalleryItem = GalleryImageItem | GalleryVideoItem;
 
 export type GalleryBlock = {
   _type: "gallery";
   title?: string;
-  items: GalleryItem[];
+  items: (
+    | {
+        type: "image";
+        src: string;
+        alt?: string;
+      }
+    | {
+        type: "video";
+        src: string;
+        alt?: string;
+        poster?: { src: string; alt?: string };
+      }
+  )[];
 };
 
 export type VideoBlock = {
@@ -55,8 +44,6 @@ export type TextBlock = {
   _type: "text";
   title?: string;
   body: string;
-  /** optional image for About / text blocks */
-  image?: { src: string; alt?: string };
 };
 
 export type CtaBlock = {
@@ -65,7 +52,33 @@ export type CtaBlock = {
   href: string;
 };
 
-export type Block = HeroBlock | GalleryBlock | VideoBlock | TextBlock | CtaBlock;
+export type AboutBlock = {
+  _type: "about";
+  title?: string;
+  body?: string;
+  image?: { src: string; alt?: string };
+  stats?: { value: string; label: string }[];
+};
+
+export type ContactBlock = {
+  _type: "contact";
+  title?: string;
+  subtitle?: string;
+  email?: string;
+  phone?: string;
+  location?: string;
+  socialLinks?: { label: string; href: string }[];
+  submitLabel?: string;
+};
+
+export type Block =
+  | HeroBlock
+  | GalleryBlock
+  | VideoBlock
+  | TextBlock
+  | CtaBlock
+  | AboutBlock
+  | ContactBlock;
 
 export type Page = {
   slug: string;

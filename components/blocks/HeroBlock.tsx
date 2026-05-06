@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import Carousel from "./CarouselClient";
 import type { HeroBlock as HeroBlockType } from "@/lib/cms/types";
 
 export default function HeroBlock({
@@ -8,41 +7,35 @@ export default function HeroBlock({
   headline,
   subheadline,
   cta,
-  backgroundImage,
-  gallery,
+  backgroundImage
 }: HeroBlockType) {
   return (
-    <section className="relative min-h-[80vh] w-full overflow-hidden">
-        {gallery && gallery.length ? (
-        <div className="absolute inset-0">
-          <Carousel items={gallery} className="h-full" showControls={false} />
-          <div className="absolute inset-0 bg-black/40 pointer-events-none" />
-        </div>
-      ) : backgroundImage?.src ? (
+    <section className="relative -mt-16 min-h-screen w-full overflow-hidden" id="hero">
+      {backgroundImage?.src ? (
         <>
           <Image
             src={backgroundImage.src}
             alt={backgroundImage.alt || ""}
             fill
             priority
-            className="object-cover opacity-60"
+            className="object-cover"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-black/45" />
         </>
       ) : (
         <div className="absolute inset-0 bg-neutral-900" />
       )}
 
-      <div className="relative mx-auto flex min-h-[80vh] max-w-6xl flex-col items-center justify-center px-6 text-center">
-        {brandTitle ? <div className="mb-10 text-sm tracking-wide opacity-90">{brandTitle}</div> : null}
+      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 text-center text-white">
+        {brandTitle ? <div className="mb-6 text-sm tracking-[0.18em] opacity-90 uppercase">{brandTitle}</div> : null}
 
-        <h1 className="text-4xl font-semibold leading-tight md:text-6xl">
+        <h1 className="text-5xl font-bold leading-tight md:text-7xl">
           {headline}
         </h1>
 
         {subheadline ? (
-          <p className="mt-4 max-w-2xl text-base opacity-90 md:text-lg">
+          <p className="mt-5 max-w-3xl text-lg opacity-90 md:text-2xl">
             {subheadline}
           </p>
         ) : null}
@@ -50,7 +43,7 @@ export default function HeroBlock({
         {cta?.href && cta?.label ? (
           <Link
             href={cta.href}
-            className="mt-8 inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-medium text-black"
+            className="mt-10 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-medium text-black transition hover:bg-neutral-100"
           >
             {cta.label}
           </Link>

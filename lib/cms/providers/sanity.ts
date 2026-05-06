@@ -1,7 +1,9 @@
 import { createClient, type SanityClient } from "@sanity/client";
 import type {
+  AboutBlock,
   Block,
   CmsProvider,
+  ContactBlock,
   GalleryBlock,
   HeroBlock,
   NavItem,
@@ -17,7 +19,8 @@ import type {
  * - `siteSettings` (singleton): { title, nav: [{label, href}], footerText }
  * - `page`: { slug (slug type or string), title, blocks: [...] }
  *
- * Block objects use `_type` matching Block union: hero | gallery | video | text | cta.
+ * Block objects use `_type` matching Block union:
+ * hero | gallery | video | text | cta | about | contact.
  * Images: use Sanity image fields; asset refs are resolved to `{ src, alt }` via GROQ.
  */
 
@@ -53,8 +56,18 @@ const SITE_SETTINGS_GROQ = `*[_type == "siteSettings"][0]{
 }`;
 
 function pageGroq(slug: string): string {
-  const candidates = slug === "home" ? ["home", "/"] : [slug];
-  const slugFilter = candidates
+  const normalized = (slug || "").trim();
+  const candidates = new Set<string>([normalized]);
+  if (normalized === "home") {
+    candidates.add("/");
+  }
+  if (normalized.startsWith("/")) {
+    const withoutSlash = normalized.slice(1);
+    if (withoutSlash) candidates.add(withoutSlash);
+  } else {
+    candidates.add(`/${normalized}`);
+  }
+  const slugFilter = Array.from(candidates)
     .map((candidate) => {
       const safe = JSON.stringify(candidate);
       return `(slug.current == ${safe} || slug == ${safe})`;
@@ -74,9 +87,27 @@ function pageGroq(slug: string): string {
       body,
       label,
       href,
+      subtitle,
+      email,
+      phone,
+      location,
+      submitLabel,
       embedUrl,
       videoUrl,
+      socialLinks[]{label, href},
+      stats[]{value, label},
       items[]{
+        _type,
+        videoUrl,
+        "src": coalesce(asset->url, src),
+        "alt": coalesce(alt, asset->altText)
+        ,
+        poster{
+          "src": coalesce(asset->url, src),
+          "alt": coalesce(alt, asset->altText)
+        }
+      },
+      image{
         "src": coalesce(asset->url, src),
         "alt": coalesce(alt, asset->altText)
       },
@@ -141,11 +172,36 @@ function normalizeGallery(raw: Record<string, unknown>): GalleryBlock {
   if (Array.isArray(itemsRaw)) {
     for (const it of itemsRaw) {
       if (!isRecord(it)) continue;
+      const type = typeof it._type === "string" ? it._type : "";
       const src = typeof it.src === "string" ? it.src : "";
+      const videoUrl = typeof it.videoUrl === "string" ? it.videoUrl : "";
+      const alt = typeof it.alt === "string" ? it.alt : undefined;
+      const posterRaw = it.poster;
+      const poster =
+        isRecord(posterRaw) && typeof posterRaw.src === "string"
+          ? {
+              src: posterRaw.src,
+              ...(typeof posterRaw.alt === "string" ? { alt: posterRaw.alt } : {}),
+            }
+          : undefined;
+
+      if (type === "videoItem" || videoUrl) {
+        const videoSrc = videoUrl || src;
+        if (!videoSrc) continue;
+        items.push({
+          type: "video",
+          src: videoSrc,
+          ...(alt ? { alt } : {}),
+          ...(poster ? { poster } : {}),
+        });
+        continue;
+      }
+
       if (!src) continue;
       items.push({
+        type: "image",
         src,
-        ...(typeof it.alt === "string" ? { alt: it.alt } : {}),
+        ...(alt ? { alt } : {}),
       });
     }
   }
@@ -177,6 +233,61 @@ function normalizeText(raw: Record<string, unknown>): TextBlock {
   };
 }
 
+function normalizeAbout(raw: Record<string, unknown>): AboutBlock {
+  const imageRaw = raw.image;
+  const statsRaw = raw.stats;
+  const stats: AboutBlock["stats"] = [];
+  if (Array.isArray(statsRaw)) {
+    for (const stat of statsRaw) {
+      if (!isRecord(stat)) continue;
+      const value = typeof stat.value === "string" ? stat.value : "";
+      const label = typeof stat.label === "string" ? stat.label : "";
+      if (value || label) stats.push({ value, label });
+    }
+  }
+
+  let image: AboutBlock["image"];
+  if (isRecord(imageRaw) && typeof imageRaw.src === "string") {
+    image = {
+      src: imageRaw.src,
+      ...(typeof imageRaw.alt === "string" ? { alt: imageRaw.alt } : {}),
+    };
+  }
+
+  return {
+    _type: "about",
+    ...(typeof raw.title === "string" ? { title: raw.title } : {}),
+    ...(typeof raw.body === "string" ? { body: raw.body } : {}),
+    ...(image ? { image } : {}),
+    ...(stats.length ? { stats } : {}),
+  };
+}
+
+function normalizeContact(raw: Record<string, unknown>): ContactBlock {
+  const linksRaw = raw.socialLinks;
+  const socialLinks: ContactBlock["socialLinks"] = [];
+  if (Array.isArray(linksRaw)) {
+    for (const link of linksRaw) {
+      if (!isRecord(link)) continue;
+      const label = typeof link.label === "string" ? link.label : "";
+      const href = typeof link.href === "string" ? link.href : "";
+      if (label || href) socialLinks.push({ label, href });
+    }
+  }
+  return {
+    _type: "contact",
+    ...(typeof raw.title === "string" ? { title: raw.title } : {}),
+    ...(typeof raw.subtitle === "string" ? { subtitle: raw.subtitle } : {}),
+    ...(typeof raw.email === "string" ? { email: raw.email } : {}),
+    ...(typeof raw.phone === "string" ? { phone: raw.phone } : {}),
+    ...(typeof raw.location === "string" ? { location: raw.location } : {}),
+    ...(typeof raw.submitLabel === "string"
+      ? { submitLabel: raw.submitLabel }
+      : {}),
+    ...(socialLinks.length ? { socialLinks } : {}),
+  };
+}
+
 function normalizeBlock(raw: unknown): Block | null {
   if (!isRecord(raw)) return null;
   const t = raw._type;
@@ -190,6 +301,10 @@ function normalizeBlock(raw: unknown): Block | null {
     case "text":
     case "textBlock":
       return normalizeText(raw);
+    case "about":
+      return normalizeAbout(raw);
+    case "contact":
+      return normalizeContact(raw);
     case "cta": {
       const label = typeof raw.label === "string" ? raw.label : "";
       const href = typeof raw.href === "string" ? raw.href : "";

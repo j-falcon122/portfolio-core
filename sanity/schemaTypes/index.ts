@@ -1,6 +1,8 @@
 import {siteSettingsType} from "./siteSettingsType";
 import {pageType} from "./pageType";
 import {
+  aboutBlockType,
+  contactBlockType,
   ctaBlockType,
   galleryBlockType,
   heroBlockType,
@@ -16,4 +18,6 @@ export const schemaTypes = [
   videoBlockType,
   textBlockType,
   ctaBlockType,
+  aboutBlockType,
+  contactBlockType,
 ];

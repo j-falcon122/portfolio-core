@@ -25,6 +25,8 @@ export const pageType = defineType({
         defineArrayMember({type: "video"}),
         defineArrayMember({type: "textBlock"}),
         defineArrayMember({type: "cta"}),
+        defineArrayMember({type: "about"}),
+        defineArrayMember({type: "contact"}),
       ],
     }),
   ],

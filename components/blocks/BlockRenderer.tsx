@@ -3,9 +3,11 @@ import HeroBlock from "./HeroBlock";
 import GalleryBlock from "./GalleryBlock";
 import VideoBlock from "./VideoBlock";
 import TextBlock from "./TextBlock";
+import CtaBlock from "./CtaBlock";
 import AboutBlock from "./AboutBlock";
+import ContactBlock from "./ContactBlock";
 
-export default function BlockRenderer({ blocks = [], pageSlug }: { blocks: Block[]; pageSlug?: string }) {
+export default function BlockRenderer({ blocks = [] }: { blocks: Block[] }) {
   return (
     <>
       {blocks.map((block, i) => {
@@ -13,13 +15,17 @@ export default function BlockRenderer({ blocks = [], pageSlug }: { blocks: Block
           case "hero":
             return <HeroBlock key={i} {...block} />;
           case "gallery":
-            return <GalleryBlock key={i} isWork={pageSlug === "work"} {...block} />;
+            return <GalleryBlock key={i} {...block} />;
           case "video":
             return <VideoBlock key={i} {...block} />;
           case "text":
-            // when rendering the about page, use the AboutBlock layout
-            if (pageSlug === "about") return <AboutBlock key={i} {...block} />;
             return <TextBlock key={i} {...block} />;
+          case "cta":
+            return <CtaBlock key={i} {...block} />;
+          case "about":
+            return <AboutBlock key={i} {...block} />;
+          case "contact":
+            return <ContactBlock key={i} {...block} />;
           default:
             return null;
         }
