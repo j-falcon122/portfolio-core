@@ -41,5 +41,9 @@
     "portfolio",
     "template"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "optionalDependencies": {
+    "lightningcss-linux-arm64-gnu": "1.31.1",
+    "lightningcss-linux-x64-gnu": "1.31.1"
+  }
 }
