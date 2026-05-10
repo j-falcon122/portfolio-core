@@ -9,23 +9,36 @@ export default function GalleryBlock({ title, items = [] }: GalleryBlockType) {
 	const [selected, setSelected] = useState<number | null>(null);
 
 	return (
-		<section className="max-w-6xl mx-auto py-12">
-			{title ? <h2 className="mb-6 text-2xl font-semibold">{title}</h2> : null}
+		<section className="mx-auto max-w-6xl px-6 py-20" id="gallery">
+			{title ? <h2 className="mb-10 text-center text-4xl font-bold">{title}</h2> : null}
 
-					<div className="gallery__items grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+					<div className="gallery__items grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
 						{items.map((item, idx) => (
 							<div
 								key={idx}
-								className="gallery__item overflow-hidden rounded cursor-pointer"
+								className="gallery__item group relative aspect-[4/5] cursor-pointer overflow-hidden rounded-lg shadow-lg"
 								onClick={() => setSelected(idx)}
 							>
-								<Image
-									src={item.src}
-									alt={item.alt || ""}
-									width={800}
-									height={600}
-									className={`gallery__img w-full h-auto object-cover transition-transform duration-150 ${selected === idx ? 'scale-105' : ''}`}
-								/>
+								{item.type === "video" ? (
+									<video
+										src={item.src}
+										poster={item.poster?.src}
+										aria-label={item.alt || "Gallery video"}
+										className={`gallery__img h-full w-full object-cover transition-transform duration-300 ${selected === idx ? "scale-105" : ""} group-hover:scale-110`}
+										controls
+										playsInline
+										preload="metadata"
+									/>
+								) : (
+									<Image
+										src={item.src}
+										alt={item.alt || ""}
+										width={800}
+										height={600}
+										className={`gallery__img h-full w-full object-cover transition-transform duration-300 ${selected === idx ? "scale-105" : ""} group-hover:scale-110`}
+									/>
+								)}
+								<div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/35" />
 							</div>
 						))}
 					</div>

@@ -2,17 +2,40 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import type { SiteSettings } from "@/lib/cms/types";
 
-export default function SiteHeader({ site }: { site: SiteSettings }) {
+export default function SiteHeader({
+  site,
+  adminNav,
+}: {
+  site: SiteSettings;
+  adminNav?: { href: string; label: string };
+}) {
   const pathname = usePathname() || "/";
+  const isHome = pathname === "/";
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 30);
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const floating = isHome && !isScrolled;
+  const containerClass = floating
+    ? "bg-transparent text-white"
+    : "bg-white/95 text-neutral-900 shadow-sm backdrop-blur";
 
   return (
-    <header className="header">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <div className="text-sm font-medium">{site.title}</div>
+    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${containerClass}`}>
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+        <Link href="/" className="text-lg font-semibold tracking-wide">
+          {site.title}
+        </Link>
 
-  <nav className="site-nav flex gap-6 text-sm opacity-90">
+        <nav className="site-nav flex gap-6 text-sm">
           {site.nav?.map((item) => {
             const active = item.href === pathname || (item.href !== "/" && pathname.startsWith(item.href));
             return (
@@ -25,9 +48,32 @@ export default function SiteHeader({ site }: { site: SiteSettings }) {
               </Link>
             );
           })}
+          {adminNav ? (
+            /^https?:\/\//i.test(adminNav.href) ? (
+              <a
+                href={adminNav.href}
+                className="nav-link"
+                target={
+                  /localhost|127\.0\.0\.1/i.test(adminNav.href)
+                    ? undefined
+                    : "_blank"
+                }
+                rel={
+                  /localhost|127\.0\.0\.1/i.test(adminNav.href)
+                    ? undefined
+                    : "noopener noreferrer"
+                }
+              >
+                {adminNav.label}
+              </a>
+            ) : (
+              <Link href={adminNav.href} className="nav-link">
+                {adminNav.label}
+              </Link>
+            )
+          ) : null}
         </nav>
       </div>
-      
     </header>
   );
 }

@@ -6,24 +6,51 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "validate:content": "node ./scripts/validate-json-ci.mjs",
+    "test:sanity": "node --env-file=.env.local scripts/test-sanity.mjs",
+    "sanity:dev": "sanity dev",
+    "sanity:dev:polling": "CHOKIDAR_USEPOLLING=1 sanity dev",
+    "sanity:deploy": "sanity deploy"
   },
   "dependencies": {
-    "next": "16.1.6",
+    "@sanity/client": "^7.22.0",
+    "@sanity/image-url": "^2.0.3",
+    "@sanity/vision": "^5.22.0",
+    "embla-carousel-react": "^8.0.0",
+    "next": "^16.2.0",
+    "next-auth": "^4.24.13",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "sanity": "^5.22.0",
+    "styled-components": "^6.4.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "ajv": "^8.18.0",
     "eslint": "^9",
-    "eslint-config-next": "16.1.6",
+    "eslint-config-next": "^16.2.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "keywords": [
+    "nextjs",
+    "typescript",
+    "cms",
+    "sanity",
+    "content-driven",
+    "portfolio",
+    "starter-template",
+    "tailwind"
+  ],
+  "license": "MIT",
+  "optionalDependencies": {
+    "@tailwindcss/oxide-linux-arm64-gnu": "4.2.1",
+    "@tailwindcss/oxide-linux-x64-gnu": "4.2.1",
+    "lightningcss-linux-arm64-gnu": "1.31.1",
+    "lightningcss-linux-x64-gnu": "1.31.1"
   }
-  ,
-  "keywords": ["nextjs","portfolio","template"],
-  "license": "MIT"
 }
