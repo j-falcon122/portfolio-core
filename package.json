@@ -38,8 +38,13 @@
   },
   "keywords": [
     "nextjs",
+    "typescript",
+    "cms",
+    "sanity",
+    "content-driven",
     "portfolio",
-    "template"
+    "starter-template",
+    "tailwind"
   ],
   "license": "MIT",
   "optionalDependencies": {
