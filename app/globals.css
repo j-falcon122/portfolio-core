@@ -11,10 +11,45 @@
 @import "./styles/blocks/about.css";
 @import "./styles/blocks/contact.css";
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --header-height: 72px;
+  --header-height: 64px;
+}
+
+/* Single-page stack: one viewport per section, snap on scroll */
+html:has(.page-section) {
+  scroll-snap-type: y proximity;
+}
+
+.page-section {
+  min-height: 100dvh;
+  min-height: 100vh;
+  scroll-margin-top: var(--header-height);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.page-section__inner {
+  display: flex;
+  min-height: inherit;
+  flex-direction: column;
+  width: 100%;
+}
+
+.page-section--home .page-section__inner > section {
+  flex: 1;
+  min-height: 100dvh;
+  min-height: 100vh;
+}
+
+.page-section--about .page-section__inner,
+.page-section--contact .page-section__inner {
+  justify-content: center;
 }
 
 @media (prefers-color-scheme: dark) {

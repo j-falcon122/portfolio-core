@@ -2,8 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import type { SiteSettings } from "@/lib/cms/types";
+import { resolveNavHref } from "@/lib/resolveNavHref";
+import { scrollToPageSection } from "@/lib/scrollToPageSection";
+
+function sectionKeyFromNavHref(href: string): string | null {
+  if (href === "/" || href === "") return "home";
+  const m = href.match(/^\/([^/]+)\/?$/);
+  return m ? m[1] : null;
+}
 
 export default function SiteHeader({
   site,
@@ -13,8 +21,11 @@ export default function SiteHeader({
   adminNav?: { href: string; label: string };
 }) {
   const pathname = usePathname() || "/";
+  const navMode = site.navigationMode ?? "routes";
+  const singlePage = navMode === "single-page";
   const isHome = pathname === "/";
   const [isScrolled, setIsScrolled] = useState(false);
+  const [hash, setHash] = useState("");
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 30);
@@ -23,27 +34,81 @@ export default function SiteHeader({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const syncHash = () => setHash(typeof window !== "undefined" ? window.location.hash : "");
+    syncHash();
+    window.addEventListener("hashchange", syncHash);
+    return () => window.removeEventListener("hashchange", syncHash);
+  }, []);
+
   const floating = isHome && !isScrolled;
   const containerClass = floating
     ? "bg-transparent text-white"
     : "bg-white/95 text-neutral-900 shadow-sm backdrop-blur";
 
+  function handleSinglePageNavClick(
+    e: MouseEvent<HTMLAnchorElement>,
+    resolvedHref: string
+  ) {
+    if (!singlePage || !isHome || !resolvedHref.startsWith("/#")) return;
+    e.preventDefault();
+    const sectionId = resolvedHref.slice(2);
+    window.history.pushState(null, "", resolvedHref);
+    setHash(resolvedHref.slice(1));
+    scrollToPageSection(sectionId);
+  }
+
+  function isNavActive(itemHref: string): boolean {
+    if (singlePage && isHome) {
+      const section = sectionKeyFromNavHref(itemHref);
+      const current = hash.replace(/^#/, "") || "home";
+      if (section === "home") return current === "home";
+      if (section) return current === section;
+      return false;
+    }
+    return (
+      itemHref === pathname || (itemHref !== "/" && pathname.startsWith(itemHref))
+    );
+  }
+
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${containerClass}`}>
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <Link href="/" className="text-lg font-semibold tracking-wide">
-          {site.title}
-        </Link>
+        {singlePage && isHome ? (
+          <a
+            href="/#home"
+            className="text-lg font-semibold tracking-wide"
+            onClick={(e) => handleSinglePageNavClick(e, "/#home")}
+          >
+            {site.title}
+          </a>
+        ) : (
+          <Link href="/" className="text-lg font-semibold tracking-wide">
+            {site.title}
+          </Link>
+        )}
 
         <nav className="site-nav flex gap-6 text-sm">
           {site.nav?.map((item) => {
-            const active = item.href === pathname || (item.href !== "/" && pathname.startsWith(item.href));
+            const resolvedHref = resolveNavHref(item.href, navMode);
+            const active = isNavActive(item.href);
+            const className = `nav-link ${active ? "nav-link--active" : ""}`;
+            // Next.js <Link> often skips native fragment scroll on `/`. Use <a> for same-page hashes.
+            const useNativeAnchor = resolvedHref.startsWith("/#");
+            if (useNativeAnchor) {
+              return (
+                <a
+                  key={`${item.href}-${resolvedHref}`}
+                  href={resolvedHref}
+                  className={className}
+                  onClick={(e) => handleSinglePageNavClick(e, resolvedHref)}
+                >
+                  {item.label}
+                </a>
+              );
+            }
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`nav-link ${active ? "nav-link--active" : ""}`}
-              >
+              <Link key={`${item.href}-${resolvedHref}`} href={resolvedHref} className={className}>
                 {item.label}
               </Link>
             );

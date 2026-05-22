@@ -60,10 +60,19 @@ export const galleryBlockType = defineType({
           type: "object",
           fields: [
             defineField({
+              name: "videoFile",
+              title: "Video file",
+              type: "file",
+              options: {accept: "video/mp4,video/webm"},
+              description:
+                "Upload an MP4 to Sanity CDN (recommended). Resolved to videoUrl on the site.",
+            }),
+            defineField({
               name: "videoUrl",
               title: "Video URL",
               type: "url",
-              validation: (rule) => rule.required(),
+              description:
+                "Or paste an HTTPS MP4 URL (Sanity CDN, S3, etc.). Used when no file is uploaded.",
             }),
             defineField({name: "alt", type: "string", title: "Accessibility label"}),
             defineField({
@@ -73,8 +82,14 @@ export const galleryBlockType = defineType({
               fields: [defineField({name: "alt", type: "string", title: "Poster alt text"})],
             }),
           ],
+          validation: (rule) =>
+            rule.custom((value) => {
+              const row = value as {videoUrl?: string; videoFile?: {asset?: {_ref?: string}}};
+              if (row?.videoFile?.asset?._ref || row?.videoUrl?.trim()) return true;
+              return "Add a video file or HTTPS video URL";
+            }),
           preview: {
-            select: {title: "videoUrl"},
+            select: {title: "videoUrl", media: "videoFile"},
             prepare(selection) {
               return {title: selection.title || "Video item"};
             },
@@ -100,11 +115,41 @@ export const videoBlockType = defineType({
   type: "object",
   fields: [
     defineField({name: "title", type: "string"}),
-    defineField({name: "embedUrl", type: "url"}),
-    defineField({name: "videoUrl", type: "url"}),
+    defineField({
+      name: "embedUrl",
+      type: "url",
+      description:
+        "YouTube or Vimeo embed URL, or a watch/share link—the site normalizes common URLs for iframes.",
+    }),
+    defineField({
+      name: "videoFile",
+      title: "Video file",
+      type: "file",
+      options: {accept: "video/mp4,video/webm"},
+      description:
+        "Upload an MP4 to Sanity CDN (recommended). Resolved to videoUrl on the site.",
+    }),
+    defineField({
+      name: "videoUrl",
+      type: "url",
+      description:
+        "Or paste an HTTPS MP4 URL (Sanity CDN, S3, etc.). Used when no file is uploaded.",
+    }),
   ],
+  validation: (rule) =>
+    rule.custom((value) => {
+      const row = value as {
+        embedUrl?: string;
+        videoUrl?: string;
+        videoFile?: {asset?: {_ref?: string}};
+      };
+      if (row?.embedUrl?.trim() || row?.videoFile?.asset?._ref || row?.videoUrl?.trim()) {
+        return true;
+      }
+      return "Add an embed URL, video file, or HTTPS video URL";
+    }),
   preview: {
-    select: {title: "title"},
+    select: {title: "title", media: "videoFile"},
     prepare(selection) {
       return {
         title: selection.title || "Video",

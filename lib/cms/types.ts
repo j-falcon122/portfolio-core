@@ -1,9 +1,19 @@
 export type NavItem = { label: string; href: string };
 
+/** `single-page`: `/` stacks section blocks; nav uses in-page anchors (`/#slug`). Sub-routes redirect to anchors. */
+export type NavigationMode = "routes" | "single-page";
+
 export type SiteSettings = {
   title: string;
   nav: NavItem[];
   footerText?: string;
+  /** Defaults to `routes` when omitted (multi-page). */
+  navigationMode?: NavigationMode;
+  /**
+   * Order of `page` document slugs stacked on `/` when `navigationMode` is `single-page`.
+   * Each slug must match a published page. Omit or leave empty to use built-in defaults.
+   */
+  singlePageSectionSlugs?: string[];
 };
 
 export type HeroBlock = {

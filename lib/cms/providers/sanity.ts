@@ -7,6 +7,7 @@ import type {
   GalleryBlock,
   HeroBlock,
   NavItem,
+  NavigationMode,
   Page,
   SiteSettings,
   TextBlock,
@@ -16,7 +17,7 @@ import type {
 /**
  * Expected Sanity document types (create matching schemas in your Studio):
  *
- * - `siteSettings` (singleton): { title, nav: [{label, href}], footerText }
+ * - `siteSettings` (singleton): { title, navigationMode?, singlePageSectionSlugs?, nav: [{label, href}], footerText }
  * - `page`: { slug (slug type or string), title, blocks: [...] }
  *
  * Block objects use `_type` matching Block union:
@@ -49,8 +50,13 @@ function createSanityClient(): SanityClient {
   });
 }
 
-const SITE_SETTINGS_GROQ = `*[_type == "siteSettings"][0]{
+const SITE_SETTINGS_GROQ = `coalesce(
+  *[_type == "siteSettings" && _id == "siteSettings"][0],
+  *[_type == "siteSettings"][0]
+){
   title,
+  navigationMode,
+  singlePageSectionSlugs,
   nav[]{ label, href },
   footerText
 }`;
@@ -93,14 +99,14 @@ function pageGroq(slug: string): string {
       location,
       submitLabel,
       embedUrl,
-      videoUrl,
+      "videoUrl": coalesce(videoUrl, videoFile.asset->url),
       socialLinks[]{label, href},
       stats[]{value, label},
       items[]{
         _type,
-        videoUrl,
         embedUrl,
-        "src": coalesce(asset->url, src),
+        "videoUrl": coalesce(videoUrl, videoFile.asset->url),
+        "src": coalesce(videoFile.asset->url, asset->url, src),
         "alt": coalesce(alt, asset->altText)
         ,
         poster{
@@ -122,6 +128,20 @@ function pageGroq(slug: string): string {
 
 function isRecord(v: unknown): v is Record<string, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
+}
+
+function normalizeNavigationMode(raw: unknown): NavigationMode | undefined {
+  if (raw === "routes" || raw === "single-page") return raw;
+  return undefined;
+}
+
+function normalizeSinglePageSectionSlugs(raw: unknown): string[] | undefined {
+  if (!Array.isArray(raw)) return undefined;
+  const out = raw
+    .filter((x): x is string => typeof x === "string")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  return out.length ? out : undefined;
 }
 
 function normalizeNav(items: unknown): NavItem[] {
@@ -381,9 +401,21 @@ const provider: CmsProvider = {
     }
     const title =
       typeof data.title === "string" ? data.title : "Site";
+    let navigationMode = normalizeNavigationMode(data.navigationMode);
+    const singlePageSectionSlugs = normalizeSinglePageSectionSlugs(
+      data.singlePageSectionSlugs
+    );
+    // Editors may add section order before toggling the radio; treat as single-page when slugs are set.
+    if (!navigationMode && singlePageSectionSlugs?.length) {
+      navigationMode = "single-page";
+    }
     return {
       title,
       nav: normalizeNav(data.nav),
+      ...(navigationMode ? { navigationMode } : {}),
+      ...(singlePageSectionSlugs?.length
+        ? { singlePageSectionSlugs }
+        : {}),
       ...(typeof data.footerText === "string"
         ? { footerText: data.footerText }
         : {}),

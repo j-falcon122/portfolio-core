@@ -1,16 +1,18 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { HeroBlock as HeroBlockType } from "@/lib/cms/types";
+import { getCms } from "@/lib/cms";
+import SinglePageNavLink from "@/components/SinglePageNavLink";
 
-export default function HeroBlock({
+export default async function HeroBlock({
   brandTitle,
   headline,
   subheadline,
   cta,
   backgroundImage
 }: HeroBlockType) {
+  const site = await getCms().getSiteSettings();
   return (
-    <section className="relative -mt-16 min-h-screen w-full overflow-hidden" id="hero">
+    <section className="relative -mt-16 min-h-screen w-full overflow-hidden">
       {backgroundImage?.src ? (
         <>
           <Image
@@ -41,12 +43,13 @@ export default function HeroBlock({
         ) : null}
 
         {cta?.href && cta?.label ? (
-          <Link
+          <SinglePageNavLink
             href={cta.href}
+            navigationMode={site.navigationMode}
             className="mt-10 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-medium text-black transition hover:bg-neutral-100"
           >
             {cta.label}
-          </Link>
+          </SinglePageNavLink>
         ) : null}
       </div>
     </section>
