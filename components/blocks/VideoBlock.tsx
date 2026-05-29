@@ -7,7 +7,7 @@ export default function VideoBlock({ title, embedUrl, videoUrl }: VideoBlockType
 
   return (
     <section className="page-container py-12">
-      {title ? <h2 className="mb-4 text-2xl font-semibold">{title}</h2> : null}
+      {title ? <h2 className="mb-4 text-center text-2xl font-semibold">{title}</h2> : null}
 
       {embedSrc ? (
         <div className="aspect-video w-full overflow-hidden rounded-lg bg-neutral-100">

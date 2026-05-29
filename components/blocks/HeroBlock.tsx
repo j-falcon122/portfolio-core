@@ -21,7 +21,7 @@ export default async function HeroBlock({
         : [];
 
   return (
-    <section className="relative -mt-[var(--header-height)] min-h-screen w-full overflow-hidden">
+    <section className="hero relative -mt-[var(--header-height)] min-h-screen w-full overflow-hidden">
       {backgroundImage?.src ? (
         <>
           <Image
