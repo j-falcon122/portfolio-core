@@ -356,7 +356,23 @@ export const contactBlockType = defineType({
           type: "object",
           fields: [
             defineField({name: "label", type: "string"}),
-            defineField({name: "href", type: "url"}),
+            defineField({
+              name: "href",
+              type: "string",
+              description: "Full URL including https:// (required for publish)",
+              validation: (rule) =>
+                rule.custom((value) => {
+                  if (!value) return true;
+                  try {
+                    const u = new URL(String(value));
+                    return u.protocol === "http:" || u.protocol === "https:"
+                      ? true
+                      : "Use a full URL starting with https://";
+                  } catch {
+                    return "Use a full URL starting with https://";
+                  }
+                }),
+            }),
           ],
         }),
       ],
