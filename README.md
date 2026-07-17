@@ -1,5 +1,7 @@
 # portfolio-core
 
+**[View live demo →](https://j-falcon122.github.io/portfolio-core/)**
+
 **Reusable portfolio package** built with Next.js, TypeScript, and pluggable CMS providers.
 
 Install a tagged release directly from GitHub:
