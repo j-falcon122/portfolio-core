@@ -8,7 +8,7 @@ const dataset = process.env.SANITY_DATASET || "production";
 
 export default defineConfig({
   name: "default",
-  title: "Template Portfolio",
+  title: "portfolio-core",
   projectId,
   dataset,
   plugins: [structureTool(), visionTool()],
