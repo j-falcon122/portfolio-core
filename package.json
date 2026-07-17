@@ -1,8 +1,14 @@
 {
   "name": "portfolio-core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "author": "Jordan Falcon",
+  "description": "Reusable Next.js portfolio components, CMS integrations, and utilities.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j-falcon122/portfolio-core.git"
+  },
+  "homepage": "https://github.com/j-falcon122/portfolio-core#readme",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

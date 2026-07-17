@@ -1,8 +1,16 @@
-# portfolio-template
+# portfolio-core
 
-**[View live demo →](https://j-falcon122.github.io/portfolio-template/)**
+**Reusable portfolio package** built with Next.js, TypeScript, and pluggable CMS providers.
 
-**Content-driven portfolio and business website starter** built with Next.js, TypeScript, and pluggable CMS providers.
+Install a tagged release directly from GitHub:
+
+```bash
+npm install github:j-falcon122/portfolio-core#v1.0.1
+```
+
+Consumer applications should add `portfolio-core` to `transpilePackages` in
+`next.config.ts` and import shared modules from `portfolio-core/lib/...` or
+`portfolio-core/components/...`.
 
 A reusable, production-minded foundation for portfolios, creators, agencies, and small businesses—Composable content blocks, interchangeable CMS backends, and environment-aware configuration so you can ship tailored sites without rebuilding plumbing each time.
 
@@ -45,7 +53,7 @@ content/mock/           # Mock CMS JSON when CMS_PROVIDER=mock
 public/                 # Static assets
 sanity/                 # Sanity Studio config and schema types
 docs/                   # Deeper architecture and content notes
-scripts/                # Init template, validation, Sanity helpers
+scripts/                # Package maintenance, validation, and Sanity helpers
 ```
 
 | Area | Role |
@@ -56,7 +64,7 @@ scripts/                # Init template, validation, Sanity helpers
 | **`components/` (layout)** | Shared navigation and footer used across routes. |
 | **`sanity/`** | Schema and Studio for teams that edit content in Sanity. |
 
-For boundaries (what belongs in the template vs a forked client repo), see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+For boundaries between the package and consuming applications, see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ---
 
@@ -117,55 +125,44 @@ This starter can grow into your **freelance or agency baseline**, an **internal 
 
 ## Project intent
 
-- This repository is the **foundational template** you evolve and copy into new projects.
+- This repository is the reusable **core package** consumed by downstream portfolio applications.
 - **Business-specific logic** should live in downstream repositories, not here.
-- Workflow: improve the template → start a new project from it → add domain logic there → repeat.
+- Workflow: improve this package → bump its version and create a tag → install that tag in downstream applications.
 
 ---
 
 ## Quick start
 
-1. Copy the folder or clone and drop history:
+1. Install a tagged package release:
 
    ```bash
-   git clone <this-repo> my-site
-   cd my-site
-   rm -rf .git
+   npm install github:j-falcon122/portfolio-core#v1.0.1
    ```
 
-2. Install dependencies:
+2. Configure Next.js:
 
-   ```bash
-   npm install
+   ```ts
+   const nextConfig = {
+     transpilePackages: ["portfolio-core"],
+   };
    ```
 
-3. Update metadata in `package.json` (name, author, license).
-4. Edit `app/`, `components/`, and `public/` for branding and assets.
-5. Set `CMS_PROVIDER` in `.env.local` (see `.env.example`):
+3. Import shared modules from `portfolio-core/lib/...` and `portfolio-core/components/...`.
+4. Keep application-specific routes, content, branding, and assets in the consumer repository.
+5. Set `CMS_PROVIDER` in the consumer's `.env.local`:
    - `mock` — no external CMS
    - `sanity` — content from Sanity
-6. Run the dev server:
-
-   ```bash
-   npm run dev
-   ```
-
-7. Optional — Sanity Studio:
-
-   ```bash
-   npm run sanity:dev
-   ```
 
 ---
 
-## What this template includes
+## What this package includes
 
 - App Router scaffolding with example routes and block-driven pages.
 - CMS abstraction with mock and Sanity providers.
 - Content-driven blocks under `components/blocks/`.
 - Tailwind and block-scoped CSS under `app/styles/`.
 
-### Template boundaries
+### Package boundaries
 
 - Keep this repo **generic** and reusable.
 - Keep **content modeling** and **layout primitives** here.
@@ -173,9 +170,9 @@ This starter can grow into your **freelance or agency baseline**, an **internal 
 
 ---
 
-## Init script
+## Legacy project initialization
 
-`scripts/init-template.sh` prompts for project name and author, updates `package.json`, can remove `.git`, and optionally runs `npm install`:
+`scripts/init-template.sh` remains available for legacy copy-based consumers. New applications should install a tagged package release instead.
 
 ```bash
 bash scripts/init-template.sh --install
@@ -232,7 +229,7 @@ Static hosting via `.github/workflows/deploy-github-pages.yml` (runs on push to 
 Local static export preview:
 
 ```bash
-NEXT_PUBLIC_BASE_PATH=/portfolio-template npm run build:pages
+NEXT_PUBLIC_BASE_PATH=/portfolio-core npm run build:pages
 npx serve out
 ```
 

@@ -1,13 +1,13 @@
 # Architecture Guide
 
-This repository is a reusable template baseline for future projects.
+This repository is the reusable `portfolio-core` package consumed by portfolio applications.
 
 ## Core Principle
 
 Keep this repo generic, content-driven, and CMS-ready.  
 Move business-specific behavior into each derived project repository.
 
-## What Belongs In This Template
+## What Belongs In This Package
 
 - Shared app structure (`app/`, routing patterns, common layout conventions)
 - Reusable presentational components (`components/`)
@@ -16,7 +16,7 @@ Move business-specific behavior into each derived project repository.
 - Generic page-building blocks (Hero, Gallery, Text, Video, CTA)
 - Default development tooling and scripts that are useful across projects
 
-## What Does Not Belong In This Template
+## What Does Not Belong In This Package
 
 - Domain-specific workflows (booking, e-commerce checkout, CRM logic, etc.)
 - Product-specific third-party integrations that only one project needs
@@ -32,13 +32,13 @@ Move business-specific behavior into each derived project repository.
 - In projects requiring managed content, use `CMS_PROVIDER=sanity`.
 - Favor schema evolution that remains broadly reusable across multiple downstream projects.
 
-## Deriving New Projects From This Template
+## Consuming This Package
 
-1. Copy/fork this template.
-2. Rename metadata and branding.
-3. Decide whether the project starts with `mock` or `sanity`.
-4. Add project-specific business logic only in that new repository.
-5. Keep improvements that are generally reusable eligible for back-porting to this template.
+1. Install a tagged `portfolio-core` release in the application repository.
+2. Add `portfolio-core` to the application's Next.js `transpilePackages`.
+3. Import shared components and utilities from package subpaths.
+4. Keep application-specific metadata, branding, content, and business logic in the consumer.
+5. Contribute broadly reusable improvements here and publish them under a new version tag.
 
 ## Decision Checklist
 
