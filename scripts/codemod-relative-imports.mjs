@@ -8,7 +8,7 @@
  *   node codemod-relative-imports.mjs <repoRoot> <targetDir1> [targetDir2 ...] [--dry]
  *
  * <repoRoot> is the repo root that "@/*" was originally relative to (e.g. the
- * portfolio-template checkout) — used to resolve what "@/x" points to.
+ * portfolio-core checkout) — used to resolve what "@/x" points to.
  * <targetDir> is one or more subfolders (relative to repoRoot) whose files
  * should actually be rewritten, e.g. "lib" "components" "sanity/schemaTypes".
  */

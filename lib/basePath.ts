@@ -1,6 +1,6 @@
 const raw = process.env.NEXT_PUBLIC_BASE_PATH?.trim() ?? "";
 
-/** Subpath prefix for GitHub Pages project sites (e.g. `/portfolio-template`). */
+/** Subpath prefix for GitHub Pages project sites (e.g. `/portfolio-core`). */
 export const basePath = raw.endsWith("/") ? raw.slice(0, -1) : raw;
 
 /** Prefix internal routes and public assets when deployed under a subpath. */
