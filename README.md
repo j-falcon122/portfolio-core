@@ -1,5 +1,3 @@
-https://j-falcon122.github.io/portfolio-template/
-
 # portfolio-template
 
 **[View live demo →](https://j-falcon122.github.io/portfolio-template/)**
