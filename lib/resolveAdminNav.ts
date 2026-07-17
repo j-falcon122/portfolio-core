@@ -1,5 +1,5 @@
-import { getDeployEnv } from "@/lib/deployEnv";
-import { SITE_ADMIN_NAV } from "@/lib/siteAdminNav";
+import { getDeployEnv } from "./deployEnv";
+import { SITE_ADMIN_NAV } from "./siteAdminNav";
 
 export function resolveAdminNav():
   | { href: string; label: string }

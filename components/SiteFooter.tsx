@@ -1,4 +1,4 @@
-import type { SiteSettings } from "@/lib/cms/types";
+import type { SiteSettings } from "../lib/cms/types";
 
 export default function SiteFooter({ site }: { site: SiteSettings }) {
   return (

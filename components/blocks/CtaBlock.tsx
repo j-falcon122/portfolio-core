@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { CtaBlock as CtaBlockType } from "@/lib/cms/types";
+import type { CtaBlock as CtaBlockType } from "../../lib/cms/types";
 
 export default function CtaBlock({ label, href }: CtaBlockType) {
   return (

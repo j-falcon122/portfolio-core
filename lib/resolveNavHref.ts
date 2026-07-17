@@ -1,4 +1,4 @@
-import type { NavigationMode } from "@/lib/cms/types";
+import type { NavigationMode } from "./cms/types";
 
 /**
  * In single-page mode, rewrite internal path links to hash targets on `/`

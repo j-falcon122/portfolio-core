@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { NavigationMode } from "@/lib/cms/types";
-import { withBasePath } from "@/lib/basePath";
-import { resolveNavHref } from "@/lib/resolveNavHref";
-import { scrollToPageSectionWhenReady } from "@/lib/scrollToPageSection";
+import type { NavigationMode } from "../lib/cms/types";
+import { withBasePath } from "../lib/basePath";
+import { resolveNavHref } from "../lib/resolveNavHref";
+import { scrollToPageSectionWhenReady } from "../lib/scrollToPageSection";
 
 type Props = {
   href: string;

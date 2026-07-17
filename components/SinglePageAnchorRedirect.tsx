@@ -1,7 +1,7 @@
 "use client";
 
 import { useLayoutEffect } from "react";
-import { withBasePath } from "@/lib/basePath";
+import { withBasePath } from "../lib/basePath";
 
 /** Client navigation so `/#slug` works (server redirects cannot set fragments reliably). */
 export default function SinglePageAnchorRedirect({ slug }: { slug: string }) {

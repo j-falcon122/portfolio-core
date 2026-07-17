@@ -1,12 +1,12 @@
 {
-  "title": "Portfolio Template",
+  "title": "Jordan Falcon",
   "navigationMode": "single-page",
   "singlePageSectionSlugs": ["home", "about", "work", "contact"],
   "nav": [
     { "label": "Home", "href": "/" },
-    { "label": "Content", "href": "/about" },
-    { "label": "Media", "href": "/work" },
+    { "label": "About", "href": "/about" },
+    { "label": "Work", "href": "/work" },
     { "label": "Contact", "href": "/contact" }
   ],
-  "footerText": "Composable content blocks · Mock or Sanity CMS · Next.js"
+  "footerText": "© 2026 Jordan Falcon"
 }

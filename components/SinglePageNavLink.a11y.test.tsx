@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
-import SinglePageNavLink from "@/components/SinglePageNavLink";
+import SinglePageNavLink from "./SinglePageNavLink";
 
 const mockPathname = vi.fn(() => "/");
 
@@ -25,7 +25,7 @@ vi.mock("next/link", () => ({
   ),
 }));
 
-vi.mock("@/lib/scrollToPageSection", () => ({
+vi.mock("../lib/scrollToPageSection", () => ({
   scrollToPageSectionWhenReady: vi.fn(),
 }));
 

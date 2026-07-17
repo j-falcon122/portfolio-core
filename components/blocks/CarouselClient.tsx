@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { GalleryItem } from "@/lib/cms/types";
+import type { GalleryItem } from "../../lib/cms/types";
 
 const Carousel = dynamic(() => import("./Carousel"), { ssr: false });
 

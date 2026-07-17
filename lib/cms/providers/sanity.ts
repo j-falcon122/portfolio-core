@@ -1,5 +1,5 @@
 import { createClient, type SanityClient } from "@sanity/client";
-import { normalizePageSlug } from "@/lib/normalizePageSlug";
+import { normalizePageSlug } from "../../normalizePageSlug";
 import type {
   AboutBlock,
   Block,

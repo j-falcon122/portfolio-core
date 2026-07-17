@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { resolveNavHref } from "@/lib/resolveNavHref";
+import { resolveNavHref } from "./resolveNavHref";
 
 describe("resolveNavHref", () => {
   it("returns href unchanged in routes mode", () => {

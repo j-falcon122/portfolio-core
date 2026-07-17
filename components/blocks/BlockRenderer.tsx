@@ -1,4 +1,4 @@
-import type { Block } from "@/lib/cms/types";
+import type { Block } from "../../lib/cms/types";
 import HeroBlock from "./HeroBlock";
 import GalleryBlock from "./GalleryBlock";
 import VideoBlock from "./VideoBlock";

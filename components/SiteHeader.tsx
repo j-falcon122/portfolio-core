@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore, type MouseEvent as ReactMouseEvent } from "react";
-import type { SiteSettings } from "@/lib/cms/types";
-import { withBasePath } from "@/lib/basePath";
-import { resolveNavHref } from "@/lib/resolveNavHref";
-import { scrollToPageSectionWhenReady } from "@/lib/scrollToPageSection";
-import SiteBrand from "@/components/SiteBrand";
+import type { SiteSettings } from "../lib/cms/types";
+import { withBasePath } from "../lib/basePath";
+import { resolveNavHref } from "../lib/resolveNavHref";
+import { scrollToPageSectionWhenReady } from "../lib/scrollToPageSection";
+import SiteBrand from "./SiteBrand";
 
 function sectionKeyFromNavHref(href: string): string | null {
   if (href === "/" || href === "") return "home";

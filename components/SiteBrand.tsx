@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { withAssetPath } from "@/lib/basePath";
+import { withAssetPath } from "../lib/basePath";
 
 export const DEFAULT_SITE_LOGO_SRC = "/jf_logo_transparent.png";
 

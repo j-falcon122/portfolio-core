@@ -1,4 +1,4 @@
-import type { ContactBlock as ContactBlockType } from "@/lib/cms/types";
+import type { ContactBlock as ContactBlockType } from "../../lib/cms/types";
 import ContactForm from "./ContactForm";
 
 export default function ContactBlock({
