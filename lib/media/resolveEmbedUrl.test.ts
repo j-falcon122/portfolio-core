@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { resolveEmbedUrl } from "@/lib/media/resolveEmbedUrl";
+import { resolveEmbedUrl } from "./resolveEmbedUrl";
 
 describe("resolveEmbedUrl", () => {
   it("converts YouTube watch URLs to embed URLs", () => {

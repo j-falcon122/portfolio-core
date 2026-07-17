@@ -1,7 +1,7 @@
 import type {
   GalleryVideoItem,
   VideoCarouselBlock as VideoCarouselBlockType,
-} from "@/lib/cms/types";
+} from "../../lib/cms/types";
 import CarouselClient from "./CarouselClient";
 
 function toGalleryItems(items: VideoCarouselBlockType["items"]): GalleryVideoItem[] {

@@ -2,6 +2,8 @@ https://j-falcon122.github.io/portfolio-template/
 
 # portfolio-template
 
+**[View live demo →](https://j-falcon122.github.io/portfolio-template/)**
+
 **Content-driven portfolio and business website starter** built with Next.js, TypeScript, and pluggable CMS providers.
 
 A reusable, production-minded foundation for portfolios, creators, agencies, and small businesses—Composable content blocks, interchangeable CMS backends, and environment-aware configuration so you can ship tailored sites without rebuilding plumbing each time.

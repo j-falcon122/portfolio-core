@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   DEFAULT_SINGLE_PAGE_SECTION_SLUGS,
   resolveSinglePageSectionSlugs,
-} from "@/lib/cms/singlePageSections";
-import type { SiteSettings } from "@/lib/cms/types";
+} from "./singlePageSections";
+import type { SiteSettings } from "./types";
 
 describe("resolveSinglePageSectionSlugs", () => {
   it("uses CMS order when provided", () => {

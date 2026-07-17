@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { withBasePath } from "@/lib/basePath";
+import { withBasePath } from "../../lib/basePath";
 
 const fieldIds = {
   name: "contact-name",

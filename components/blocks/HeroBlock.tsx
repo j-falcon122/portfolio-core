@@ -1,8 +1,8 @@
 import Image from "next/image";
-import type { HeroBlock as HeroBlockType } from "@/lib/cms/types";
-import { withAssetPath } from "@/lib/basePath";
-import { getCms } from "@/lib/cms";
-import SinglePageNavLink from "@/components/SinglePageNavLink";
+import type { HeroBlock as HeroBlockType } from "../../lib/cms/types";
+import { withAssetPath } from "../../lib/basePath";
+import { getCms } from "../../lib/cms";
+import SinglePageNavLink from "../SinglePageNavLink";
 
 export default async function HeroBlock({
   brandTitle,

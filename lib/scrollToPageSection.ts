@@ -1,4 +1,4 @@
-import { normalizePageSlug } from "@/lib/normalizePageSlug";
+import { normalizePageSlug } from "./normalizePageSlug";
 
 /** Matches SiteHeader `h-16` and `--header-height` in globals.css */
 export const PAGE_HEADER_OFFSET_PX = 64;

@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { withAssetPath } from "@/lib/basePath";
-import type { GalleryBlock as GalleryBlockType } from "@/lib/cms/types";
+import { withAssetPath } from "../../lib/basePath";
+import type { GalleryBlock as GalleryBlockType } from "../../lib/cms/types";
 
 export default function GalleryBlock({ title, items = [] }: GalleryBlockType) {
   const [selected, setSelected] = useState<number | null>(null);

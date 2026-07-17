@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { normalizePageSlug } from "@/lib/normalizePageSlug";
+import { normalizePageSlug } from "./normalizePageSlug";
 
 describe("normalizePageSlug", () => {
   it("strips leading and trailing slashes", () => {

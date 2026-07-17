@@ -3,9 +3,9 @@
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { useEffect, useRef, useState } from "react";
-import type { GalleryItem } from "@/lib/cms/types";
-import { withAssetPath } from "@/lib/basePath";
-import { resolveEmbedUrl } from "@/lib/media/resolveEmbedUrl";
+import type { GalleryItem } from "../../lib/cms/types";
+import { withAssetPath } from "../../lib/basePath";
+import { resolveEmbedUrl } from "../../lib/media/resolveEmbedUrl";
 
 export default function Carousel({
   items = [],

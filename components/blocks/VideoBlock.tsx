@@ -1,6 +1,6 @@
-import type { VideoBlock as VideoBlockType } from "@/lib/cms/types";
-import { withAssetPath } from "@/lib/basePath";
-import { resolveEmbedUrl } from "@/lib/media/resolveEmbedUrl";
+import type { VideoBlock as VideoBlockType } from "../../lib/cms/types";
+import { withAssetPath } from "../../lib/basePath";
+import { resolveEmbedUrl } from "../../lib/media/resolveEmbedUrl";
 
 export default function VideoBlock({ title, embedUrl, videoUrl }: VideoBlockType) {
   const embedSrc = embedUrl ? resolveEmbedUrl(embedUrl) : undefined;

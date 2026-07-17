@@ -1,6 +1,6 @@
 import Image from "next/image";
-import type { AboutBlock as AboutBlockType } from "@/lib/cms/types";
-import { withAssetPath } from "@/lib/basePath";
+import type { AboutBlock as AboutBlockType } from "../../lib/cms/types";
+import { withAssetPath } from "../../lib/basePath";
 
 export default function AboutBlock({
   title,

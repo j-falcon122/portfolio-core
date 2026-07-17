@@ -5,146 +5,89 @@
     "blocks": [
       {
         "_type": "hero",
-        "brandTitle": "Portfolio Template",
-        "headline": "Hero Block",
-        "subheadline": "Full-width intro with optional background image, brand title, headline, subheadline, and multiple call-to-action buttons. Ideal for landing pages, campaign headers, and above-the-fold storytelling.",
+        "brandTitle": "Jordan Falcon",
+        "headline": "Software engineer & lifelong learner",
+        "subheadline": "I believe the best experiences are built with intention—turning complex technical challenges into products that feel simple, intuitive, and meaningful.",
         "ctas": [
-          { "label": "See content blocks", "href": "/about" },
-          { "label": "See media blocks", "href": "/work" }
+          { "label": "About me", "href": "/about" },
+          { "label": "Get in touch", "href": "/contact" }
         ],
         "backgroundImage": {
-          "src": "/vecteezy_colourful-hot-air-balloons-floating-in-the-blue-sky-during-a_47353614.jpg",
-          "alt": "Colourful hot air balloons — sample hero background"
+          "src": "/placeholder-hero.svg",
+          "alt": "Abstract gradient background"
         }
       },
       {
         "_type": "text",
-        "title": "Built for client demos",
-        "body": "<p>This site is a <strong>living component library</strong>. Each section below maps to a CMS block your team can mix, reorder, and publish without touching code.</p><p>Scroll through <em>Content</em>, <em>Media</em>, and <em>Contact</em> to preview every block type included in the template — then swap copy, imagery, and video for your next project.</p>"
-      },
-      {
-        "_type": "text",
-        "title": "What's included",
-        "body": "<p><strong>8 composable blocks</strong> — Hero, About, Text, Gallery, Video, Video Carousel, CTA, and Contact.</p><p><strong>2 CMS modes</strong> — local mock JSON for fast iteration, or Sanity for shared authoring and production deploys.</p><p><strong>Environment-aware</strong> — single-page or multi-route navigation, GitHub Pages static export, and hosted Sanity Studio.</p><p>Fork this template for your next client site, replace the demo copy, and ship.</p>"
+        "title": "What I do",
+        "body": "<p>For the past several years, I've been fortunate to help build products used by <strong>millions of sports fans</strong>, turning complex technical challenges into experiences that feel simple, intuitive, and meaningful.</p><p>My work has centered around modern frontend development with <strong>React</strong>, <strong>TypeScript</strong>, and <strong>Next.js</strong>—creating scalable applications, improving user experiences, and collaborating across teams to bring ideas to life.</p>"
       }
     ]
   },
   {
     "slug": "about",
-    "title": "Content",
+    "title": "About",
     "blocks": [
       {
-        "_type": "text",
-        "title": "Content blocks",
-        "body": "<p>These blocks handle narrative and profile content — perfect for about pages, service descriptions, and editorial sections.</p>"
-      },
-      {
         "_type": "about",
-        "title": "About Block",
-        "body": "Side-by-side layout with title, body copy, optional portrait or team photo, and a row of stat highlights. Use it for studio bios, founder stories, or capability summaries.",
+        "title": "About me",
+        "body": "I'm Jordan Falcon—a software engineer, lifelong learner, and someone who believes the best experiences are built with intention. Writing code is one part of who I am, but I'm equally driven by curiosity, creativity, and the desire to keep improving.",
         "image": {
-          "src": "/placeholder-work-6.svg",
-          "alt": "Sample portrait for the About block"
+          "src": "/jf_logo_transparent.png",
+          "alt": "Jordan Falcon"
         },
         "stats": [
-          { "value": "8", "label": "Block types" },
-          { "value": "2", "label": "CMS providers" },
-          { "value": "1", "label": "Content model" }
+          { "value": "React", "label": "TypeScript · Next.js" },
+          { "value": "Sports", "label": "Products at scale" },
+          { "value": "People", "label": "First, always" }
         ]
       },
       {
         "_type": "text",
-        "title": "Text Block",
-        "body": "<p>Flexible rich-text section for long-form copy, lists, and inline formatting. Authors write in the CMS; the front end renders semantic HTML.</p><ul><li>Section titles and body copy</li><li>Supports paragraphs, emphasis, and lists</li><li>Stacks cleanly between visual blocks</li></ul><p>Pair it with Hero, About, or Contact blocks to build complete pages from structured content alone.</p>"
+        "title": "Beyond the keyboard",
+        "body": "<p>Sports have always been at the center of my life. Whether I'm watching a game, breaking down strategy, or building products that connect fans with the teams they love, I've always been fascinated by competition, teamwork, and the stories behind every season.</p><p>When I'm away from my keyboard, you'll usually find me dancing salsa, exploring new music, gaming with friends, or organizing events that bring people together. One of the traditions I'm most proud of is our annual <strong>Falcon Bros BBQ</strong>—a community gathering that started with a simple idea: create a space where people can celebrate life, reconnect, and make lasting memories. It's never been about making a profit. It's always been about creating moments that matter.</p>"
+      },
+      {
+        "_type": "text",
+        "title": "How I think about building",
+        "body": "<p>I believe the same philosophy applies to technology.</p><p>Great software isn't just about clean architecture or elegant code—it's about <strong>understanding people</strong>. Every feature, every interaction, and every detail should solve a real problem and leave someone's experience a little better than before.</p><p>Whether I'm designing a new user experience, learning a new technology, dancing to live music, or competing in a game with friends, I'm driven by curiosity, creativity, and the desire to keep improving.</p>"
       }
     ]
   },
   {
     "slug": "work",
-    "title": "Media",
+    "title": "Work",
     "blocks": [
       {
         "_type": "text",
-        "title": "Media blocks",
-        "body": "<p>Image grids, hosted video, embeds, and carousels — everything you need for portfolios, case studies, and motion reels.</p>"
+        "title": "Selected work",
+        "body": "<p>Projects and case studies coming soon. In the meantime, feel free to reach out if you'd like to hear more about the products I've helped build for sports fans at scale.</p>"
       },
       {
         "_type": "gallery",
-        "title": "Gallery Block",
+        "title": "Projects",
         "items": [
           {
             "type": "image",
             "src": "/placeholder-work-1.svg",
-            "alt": "Gallery image — selectable grid tile with hover state"
+            "alt": "Project placeholder — add your work here"
           },
           {
             "type": "image",
             "src": "/placeholder-work-2.svg",
-            "alt": "Gallery image — responsive three-column layout"
+            "alt": "Project placeholder — add your work here"
           },
           {
             "type": "image",
             "src": "/placeholder-work-3.svg",
-            "alt": "Gallery image — case study or project thumbnail"
-          },
-          {
-            "type": "video",
-            "src": "/vecteezy_young-woman-travelling-on-a-train-during-the-daytime-looking_31113935.mp4",
-            "alt": "Gallery video — inline MP4 from Sanity CDN or hosted URL"
+            "alt": "Project placeholder — add your work here"
           }
         ]
-      },
-      {
-        "_type": "video",
-        "title": "Video Block",
-        "embedUrl": "https://www.youtube.com/watch?v=LXb3EKWsInQ",
-        "videoUrl": "/placeholder-video.mp4"
-      },
-      {
-        "_type": "text",
-        "title": "Video Block — embed or hosted",
-        "body": "<p>The Video block supports <strong>YouTube/Vimeo embeds</strong> (shown above) or a <strong>hosted MP4</strong> URL from Sanity CDN. Authors pick one source in the CMS; the site renders the appropriate player.</p>"
-      },
-      {
-        "_type": "videoCarousel",
-        "title": "Video Carousel Block",
-        "items": [
-          {
-            "title": "Slide 1 — hosted MP4",
-            "videoUrl": "/video-from-rawpixel-id-26889016-sd.mp4",
-            "poster": {
-              "src": "/placeholder-work-4.svg",
-              "alt": "Poster frame for carousel slide"
-            }
-          },
-          {
-            "title": "Slide 2 — hosted MP4",
-            "videoUrl": "/video-from-rawpixel-id-17154898-sd.mp4",
-            "poster": {
-              "src": "/placeholder-work-5.svg",
-              "alt": "Poster frame for carousel slide"
-            }
-          },
-          {
-            "title": "Slide 3 — hosted MP4",
-            "videoUrl": "/vecteezy_young-woman-travelling-on-a-train-during-the-daytime-looking_31113935.mp4"
-          }
-        ]
-      },
-      {
-        "_type": "text",
-        "title": "Video Carousel Block — swipeable reel",
-        "body": "<p>Horizontal carousel for motion reels, product demos, or testimonial clips. Each slide supports a hosted MP4, optional poster image, and title.</p>"
       },
       {
         "_type": "cta",
-        "label": "CTA Block — Start a project",
+        "label": "Let's connect",
         "href": "/contact"
-      },
-      {
-        "_type": "text",
-        "title": "CTA Block",
-        "body": "<p>Standalone call-to-action button for conversion moments — book a call, view pricing, or download a deck. Place it anywhere in the page flow.</p>"
       }
     ]
   },
@@ -154,16 +97,15 @@
     "blocks": [
       {
         "_type": "contact",
-        "title": "Contact Block",
-        "subtitle": "Contact form with email, phone, location, and social links. Wire the submit action to your CRM or email service in a derived project — the layout and fields are ready out of the box.",
-        "email": "hello@example.com",
-        "phone": "+1 (555) 010-2000",
-        "location": "Remote · US Eastern",
+        "title": "Get in touch",
+        "subtitle": "I'm always excited to connect with people who are passionate about building meaningful products, creating memorable experiences, or simply sharing ideas. Thanks for stopping by.",
+        "email": "j.falcon122@gmail.com",
+        "phone": "",
+        "location": "US Eastern",
         "submitLabel": "Send message",
         "socialLinks": [
-          { "label": "LinkedIn", "href": "https://www.linkedin.com" },
-          { "label": "GitHub", "href": "https://github.com" },
-          { "label": "Dribbble", "href": "https://dribbble.com" }
+          { "label": "GitHub", "href": "https://github.com/j-falcon122" },
+          { "label": "Email", "href": "mailto:j.falcon122@gmail.com" }
         ]
       }
     ]

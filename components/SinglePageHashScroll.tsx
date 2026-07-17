@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { scrollToPageSectionWhenReady } from "@/lib/scrollToPageSection";
+import { scrollToPageSectionWhenReady } from "../lib/scrollToPageSection";
 
 function syncScrollFromHash() {
   const raw = typeof window !== "undefined" ? window.location.hash : "";

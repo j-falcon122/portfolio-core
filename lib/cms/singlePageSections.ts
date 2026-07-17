@@ -1,5 +1,5 @@
-import type { SiteSettings } from "@/lib/cms/types";
-import { normalizePageSlug } from "@/lib/normalizePageSlug";
+import type { SiteSettings } from "./types";
+import { normalizePageSlug } from "../normalizePageSlug";
 
 /** Fallback order when CMS omits `singlePageSectionSlugs` or sends an empty list. */
 export const DEFAULT_SINGLE_PAGE_SECTION_SLUGS = [

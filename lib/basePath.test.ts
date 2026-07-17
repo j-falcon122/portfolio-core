@@ -7,7 +7,7 @@ describe("withBasePath", () => {
 
   it("returns paths unchanged when no base path is set", async () => {
     vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "");
-    const { withBasePath, withAssetPath } = await import("@/lib/basePath");
+    const { withBasePath, withAssetPath } = await import("./basePath");
     expect(withBasePath("/#home")).toBe("/#home");
     expect(withAssetPath("/logo.png")).toBe("/logo.png");
   });
@@ -15,7 +15,7 @@ describe("withBasePath", () => {
   it("prefixes internal routes and assets with the base path", async () => {
     vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/portfolio-template");
     vi.resetModules();
-    const { withBasePath, withAssetPath } = await import("@/lib/basePath");
+    const { withBasePath, withAssetPath } = await import("./basePath");
     expect(withBasePath("/#work")).toBe("/portfolio-template/#work");
     expect(withBasePath("/admin")).toBe("/portfolio-template/admin");
     expect(withAssetPath("/jf_logo_transparent.png")).toBe(
@@ -26,7 +26,7 @@ describe("withBasePath", () => {
   it("leaves external URLs unchanged", async () => {
     vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/portfolio-template");
     vi.resetModules();
-    const { withBasePath } = await import("@/lib/basePath");
+    const { withBasePath } = await import("./basePath");
     expect(withBasePath("https://example.com/x")).toBe("https://example.com/x");
   });
 });

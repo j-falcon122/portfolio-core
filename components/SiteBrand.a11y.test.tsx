@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
-import SiteBrand from "@/components/SiteBrand";
+import SiteBrand from "./SiteBrand";
 
 vi.mock("next/image", () => ({
   default: ({

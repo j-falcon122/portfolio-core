@@ -1,4 +1,4 @@
-import type { TextBlock as TextBlockType } from "@/lib/cms/types";
+import type { TextBlock as TextBlockType } from "../../lib/cms/types";
 
 export default function TextBlock({ title, body }: TextBlockType) {
 	return (
