@@ -7,7 +7,7 @@
 Install a tagged release directly from GitHub:
 
 ```bash
-npm install github:j-falcon122/portfolio-core#v1.0.1
+npm install github:j-falcon122/portfolio-core#v1.0.2
 ```
 
 Consumer applications should add `portfolio-core` to `transpilePackages` in
@@ -138,7 +138,7 @@ This starter can grow into your **freelance or agency baseline**, an **internal 
 1. Install a tagged package release:
 
    ```bash
-   npm install github:j-falcon122/portfolio-core#v1.0.1
+   npm install github:j-falcon122/portfolio-core#v1.0.2
    ```
 
 2. Configure Next.js:
