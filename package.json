@@ -1,6 +1,6 @@
 {
   "name": "portfolio-core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": false,
   "author": "Jordan Falcon",
   "description": "Reusable Next.js portfolio components, CMS integrations, and utilities.",
