@@ -2,6 +2,12 @@
 
 import { useState, type FormEvent } from "react";
 import { withBasePath } from "../../lib/basePath";
+import {
+  getContactFormConfigError,
+  getContactFormFallbackError,
+  resolveContactSubmitMode,
+  type ContactSubmitMode,
+} from "../../lib/contact/resolveContactSubmit";
 
 const fieldIds = {
   name: "contact-name",
@@ -11,11 +17,13 @@ const fieldIds = {
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
-type ContactFormProps = {
+export type ContactFormProps = {
   submitLabel?: string;
+  /** Force a transport. Default: web3forms when a public key exists, else `/api/contact`. */
+  submitMode?: ContactSubmitMode;
 };
 
-export default function ContactForm({ submitLabel }: ContactFormProps) {
+export default function ContactForm({ submitLabel, submitMode }: ContactFormProps) {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -33,38 +41,45 @@ export default function ContactForm({ submitLabel }: ContactFormProps) {
     };
 
     const web3formsKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY?.trim();
+    const mode = resolveContactSubmitMode({ submitMode, web3formsKey });
+    const configError = getContactFormConfigError(mode, web3formsKey);
+    if (configError) {
+      setStatus("error");
+      setErrorMessage(configError);
+      return;
+    }
 
     try {
-      const response = web3formsKey
-        ? await fetch("https://api.web3forms.com/submit", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Accept: "application/json" },
-            body: JSON.stringify({
-              access_key: web3formsKey,
-              ...payload,
-              subject: `Portfolio contact from ${payload.name}`,
-            }),
-          })
-        : await fetch(withBasePath("/api/contact"), {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          });
+      const response =
+        mode === "web3forms"
+          ? await fetch("https://api.web3forms.com/submit", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", Accept: "application/json" },
+              body: JSON.stringify({
+                access_key: web3formsKey,
+                ...payload,
+                subject: `Portfolio contact from ${payload.name}`,
+              }),
+            })
+          : await fetch(withBasePath("/api/contact"), {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
 
       const data = (await response.json().catch(() => null)) as
         | { ok?: boolean; success?: boolean; error?: string; message?: string }
         | null;
 
-      const ok = web3formsKey
-        ? response.ok && data?.success === true
-        : response.ok && data?.ok === true;
+      const ok =
+        mode === "web3forms"
+          ? response.ok && data?.success === true
+          : response.ok && data?.ok === true;
 
       if (!ok) {
         setStatus("error");
         setErrorMessage(
-          data?.error ||
-            data?.message ||
-            "Could not send your message. Check form configuration and try again."
+          data?.error || data?.message || getContactFormFallbackError(mode)
         );
         return;
       }

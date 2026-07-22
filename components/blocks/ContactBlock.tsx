@@ -1,5 +1,11 @@
 import type { ContactBlock as ContactBlockType } from "../../lib/cms/types";
+import type { ContactSubmitMode } from "../../lib/contact/resolveContactSubmit";
 import ContactForm from "./ContactForm";
+
+type ContactBlockProps = ContactBlockType & {
+  /** Optional transport override for the embedded form. */
+  submitMode?: ContactSubmitMode;
+};
 
 export default function ContactBlock({
   title,
@@ -9,7 +15,8 @@ export default function ContactBlock({
   location,
   socialLinks = [],
   submitLabel,
-}: ContactBlockType) {
+  submitMode,
+}: ContactBlockProps) {
   return (
     <section className="contact-block">
       <div className="contact-block__inner">
@@ -68,7 +75,7 @@ export default function ContactBlock({
             ) : null}
           </div>
 
-          <ContactForm submitLabel={submitLabel} />
+          <ContactForm submitLabel={submitLabel} submitMode={submitMode} />
         </div>
       </div>
     </section>
