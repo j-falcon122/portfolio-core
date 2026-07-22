@@ -90,6 +90,8 @@ The app distinguishes **local**, **QA** (preview/staging), and **production**—
 
 **Admin / Studio links:** On local, admin often points at `http://localhost:3333` when running `npm run sanity:dev`. For QA and production, set `ADMIN_NAV_URL` to your deployed Sanity Studio. Details are in `.env.example` and the previous “QA vs production” behavior is folded into the table above.
 
+**Contact form:** Prefer `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` for static hosts (GitHub Pages). Use `RESEND_API_KEY` + `CONTACT_FORM_TO_EMAIL` only when the site runs a Node server that ships `app/api/contact`. Hosts can force a transport with the `submitMode` prop on `ContactBlock` / `ContactForm`.
+
 ---
 
 ## Long-term vision
